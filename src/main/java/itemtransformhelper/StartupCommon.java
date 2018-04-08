@@ -23,10 +23,6 @@ public class StartupCommon
 
   public static void preInitCommon()
   {
-    // each instance of your item should have a name that is unique within your mod.  use lower case.
-    itemCamera = (ItemCamera)(new ItemCamera().setUnlocalizedName("item_camera"));
-    itemCamera.setRegistryName("item_camera");
-    GameRegistry.register(itemCamera);
   }
 
   public static void initCommon()

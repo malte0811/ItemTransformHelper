@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -201,18 +200,12 @@ public class MenuItemCameraTransforms
   {
     ItemTransformVec3f transformVec3f = getItemTransformRef(linkToHUDrenderer, transformToBeCopied);
 
-    if (savedModel instanceof IPerspectiveAwareModel) {  // IPerspectiveAware just have identity matrix for getItemCameraTransforms
       // --> need to back-calculate from the transform matrix
-      IPerspectiveAwareModel savedModelPA = (IPerspectiveAwareModel) savedModel;
       ItemCameraTransforms.TransformType currentType = transformToBeCopied.getVanillaTransformType();
-      Pair<? extends IBakedModel, Matrix4f> modelAndMatrix = savedModelPA.handlePerspective(currentType);
+      Pair<? extends IBakedModel, Matrix4f> modelAndMatrix = savedModel.handlePerspective(currentType);
       TRSRTransformation tr = new TRSRTransformation(modelAndMatrix.getRight());
       ItemTransformVec3f newItemTransform = TRSRTransformationBugFix.toItemTransform(tr);
       copyTransforms(newItemTransform, transformVec3f);
-    } else { // not IPerspectiveAwareModel
-      ItemCameraTransforms originalTransforms = savedModel.getItemCameraTransforms();
-      copyNonPerspectiveAware(originalTransforms, transformVec3f, transformToBeCopied);
-    }
 
   }
 

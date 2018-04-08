@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.World;
 
 /**
  * User: The Grey Ghost
@@ -26,7 +28,7 @@ public class ItemCamera extends Item
   @SideOnly(Side.CLIENT)
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
     tooltip.add("1) Place the camera in your hotbar");
     tooltip.add("2) Hold an item in your hand");
     tooltip.add("3) Use the cursor keys to ");

@@ -34,11 +34,7 @@ public class ItemModelFlexibleCamera implements IBakedModel
 {
   public static ItemModelFlexibleCamera getWrappedModel(IBakedModel modelToWrap, UpdateLink linkToCurrentInformation)
   {
-    if (modelToWrap instanceof IPerspectiveAwareModel) {
-      return new ItemModelFlexibleCameraPerspectiveAware(modelToWrap, linkToCurrentInformation);
-    } else {
       return new ItemModelFlexibleCamera(modelToWrap, linkToCurrentInformation);
-    }
   }
 
   private ItemModelFlexibleCamera(IBakedModel i_modelToWrap, UpdateLink linkToCurrentInformation)
@@ -114,13 +110,6 @@ public class ItemModelFlexibleCamera implements IBakedModel
 
   private final IBakedModel iBakedModel;
 
-  public static class ItemModelFlexibleCameraPerspectiveAware extends ItemModelFlexibleCamera implements IPerspectiveAwareModel
-  {
-    ItemModelFlexibleCameraPerspectiveAware(IBakedModel i_modelToWrap, UpdateLink linkToCurrentInformation)
-    {
-      super(i_modelToWrap, linkToCurrentInformation);
-    }
-
     @Override
     public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
       if (updateLink.itemModelToOverride == this) {
@@ -180,10 +169,9 @@ public class ItemModelFlexibleCamera implements IBakedModel
 
       } else {
         IBakedModel baseModel = getIBakedModel();
-        return ((IPerspectiveAwareModel) baseModel).handlePerspective(cameraTransformType);
+        return baseModel.handlePerspective(cameraTransformType);
       }
     }
-  }
 
   public static class UpdateLink
   {

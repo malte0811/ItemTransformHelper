@@ -6,8 +6,12 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = ItemTransformHelper.MODID, version = ItemTransformHelper.VERSION)
+@Mod.EventBusSubscriber
 public class ItemTransformHelper
 {
     public static final String MODID = "itemtransformhelper";
@@ -38,4 +42,14 @@ public class ItemTransformHelper
     {
       proxy.postInit();
     }
+
+
+
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		// each instance of your item should have a name that is unique within your mod.  use lower case.
+		StartupCommon.itemCamera = (ItemCamera)(new ItemCamera().setUnlocalizedName("item_camera"));
+		StartupCommon.itemCamera.setRegistryName("item_camera");
+		event.getRegistry().register(StartupCommon.itemCamera);
+	}
 }
